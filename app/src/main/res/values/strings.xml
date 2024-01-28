@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BookShelfApp</string>
+    <string name="bookshelf">BookShelf</string>
+    <string name="book_cover_image">Book Cover Image</string>
+    <string name="failed_to_load">Failed To Load</string>
+    <string name="loading">Loading</string>
+</resources>
