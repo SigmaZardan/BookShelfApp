@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -39,6 +40,7 @@ fun HomeScreen(
             is BookShelfUiState.Error -> ErrorScreen(
                 retryAction = retryAction, modifier = Modifier.fillMaxSize()
             )
+
             is BookShelfUiState.Loading -> LoadingScreen(modifier = Modifier.fillMaxSize())
         }
 
@@ -77,7 +79,11 @@ fun ErrorScreen(retryAction: () -> Unit, modifier: Modifier = Modifier) {
 
 @Composable
 fun BookCoverListScreen(books: List<Item>) {
-    LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
         items(books) { book ->
             BookCoverItem(thumbnail = book.volumeInfo.imageLinks.thumbnail)
         }
@@ -94,10 +100,11 @@ fun BookCoverListScreenPreview() {
 @Composable
 fun BookCoverItem(thumbnail: String) {
     AsyncImage(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(300.dp),
         model = ImageRequest.Builder(context = LocalContext.current)
-            .data(thumbnail.replace("http", "https")).crossfade(true)
-            .build(),
+            .data(thumbnail.replace("http", "https")).crossfade(true).build(),
         error = painterResource(R.drawable.ic_broken_image),
         placeholder = painterResource(R.drawable.loading_img),
         contentDescription = stringResource(R.string.book_cover_image),
